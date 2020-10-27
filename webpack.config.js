@@ -1,9 +1,27 @@
-var path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-    mode: 'development',  // development 开发模式 or production 生产模式(默认模式)
-    entry: './src/index.js',  //入口文件,设置成自己的
+    mode: 'development',
+    devtool: 'inline-source-map',
+    devServer: {
+        contentBase: './dist',
+    },
+    entry: './src/index.js',
     output: {
-        filename: '[name].[contenthash].js'  //将文件名hash编码
-    }
+        filename: 'index.[contenthash].js'
+    },
+    plugins: [new HtmlWebpackPlugin({
+        title: 'template of  lin',
+        template: 'src/assets/index.html'
+    })],
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
+        ],
+    },
+
 };
