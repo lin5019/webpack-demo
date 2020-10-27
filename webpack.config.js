@@ -1,20 +1,19 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
     mode: 'development',
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',
-    },
     entry: './src/index.js',
     output: {
         filename: 'index.[contenthash].js'
     },
-    plugins: [new HtmlWebpackPlugin({
-        title: 'template of  lin',
-        template: 'src/assets/index.html'
-    })],
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: 'template of  lin',
+            template: 'src/assets/index.html'
+        }),
+    ],
     module: {
         rules: [
             {
