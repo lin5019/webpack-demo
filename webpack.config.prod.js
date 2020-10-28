@@ -1,38 +1,79 @@
+//const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const base=require('./webpack.config.base.js')
+//const path = require("path");
+const base = require('./webpack.config.base.js')
 
 module.exports = {
     ...base,
-    mode: 'production',
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',
-    },
+    mode: "production",
     plugins: [
         ...base.plugins,
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
-            chunkFilename: '[id].css',
+            chunkFilename: '[id].[contenthash].css',
+            ignoreOrder: false, // Enable to remove warnings about conflicting order
         }),
     ],
     module: {
         rules: [
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'images',
+                },
+            },
             {
                 test: /\.css$/i,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            publicPath: '/public/path/to/',
+                            publicPath: '../',
                         },
                     },
                     'css-loader',
                 ],
-                //use: ['style-loader', 'css-loader'],
             },
-        ],
-    },
-
+            {
+                test: /\.less$/i,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../',
+                        },
+                    },
+                    'css-loader',
+                    'less-loader',
+                ],
+            },
+            {
+                test: /\.scss$/i,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../',
+                        },
+                    },
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+            {
+                test: /\.styl$/i,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../',
+                        },
+                    },
+                    'css-loader',
+                    'stylus-loader',
+                ],
+            },
+        ]
+    }
 };
